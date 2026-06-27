@@ -9,7 +9,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/orders")
-@CrossOrigin(origins = "http://localhost:4200") // ✅ Important
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://food-shop-deploy.vercel.app"
+}) // ✅ Important
 public class OrderController {
 
     @Autowired
