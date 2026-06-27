@@ -1,0 +1,87 @@
+<div class="container mt-5">
+
+  <h2 class="text-center mb-4">🧾 Checkout</h2>
+
+  <div class="row">
+
+    <!-- Customer Details -->
+    <div class="col-md-7">
+      <div class="card shadow p-4">
+
+        <h4 class="mb-3">Delivery Details</h4>
+
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="customerName">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Phone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="phone">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Address</label>
+          <textarea
+            rows="4"
+            class="form-control"
+            [(ngModel)]="address">
+          </textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="col-md-5">
+
+      <div class="card shadow p-4">
+
+        <h4 class="mb-3">Order Summary</h4>
+
+        <div
+          class="d-flex justify-content-between mb-2"
+          *ngFor="let item of cartItems">
+
+          <span>
+            {{ item.food?.name }}
+            x {{ item.quantity }}
+          </span>
+
+          <span>
+            ₹{{ item.price * item.quantity }}
+          </span>
+
+        </div>
+
+        <hr>
+
+        <div class="d-flex justify-content-between">
+
+          <h5>Total</h5>
+
+          <h5 class="text-success">
+            ₹{{ totalAmount }}
+          </h5>
+
+        </div>
+
+        <button
+  class="btn btn-success"
+  (click)="proceedToPayment()">
+  Pay Now
+</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

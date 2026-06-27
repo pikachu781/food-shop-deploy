@@ -1,0 +1,16 @@
+.admin-navbar{
+  background: linear-gradient(45deg,#141e30,#243b55);
+  padding:12px;
+}
+
+.admin-navbar .nav-link{
+  color:white;
+  font-weight:500;
+  margin-right:10px;
+  transition:0.3s;
+}
+
+.admin-navbar .nav-link:hover{
+  color:#ffd700;
+  transform:scale(1.05);
+}

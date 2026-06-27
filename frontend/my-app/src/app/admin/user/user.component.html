@@ -1,0 +1,48 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">👤 User Management</h2>
+
+  <input type="text" placeholder="Search user..." class="form-control mb-3">
+
+  <table class="table table-bordered text-center">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+         
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody #tableBody>
+      <!-- Use *ngFor for simplicity, but can also render rows manually if needed -->
+      <tr *ngFor="let user of users; let i = index">
+        <td><span>{{user.id}}</span></td>
+
+        <td>
+          <span>{{user.name}}</span>
+          <input type="text" value="{{user.name}}" style="display:none">
+        </td>
+
+        <td>
+          <span>{{user.email}}</span>
+          <input type="email" value="{{user.email}}" style="display:none">
+        </td>
+
+        <td>
+          <span>{{user.phone}}</span>
+          <input type="text" value="{{user.phone}}" style="display:none">
+        </td>
+ 
+
+        <td>
+          <button class="btn btn-warning btn-sm edit-btn" (click)="editRow(i)">Edit</button>
+          <button class="btn btn-success btn-sm save-btn" (click)="saveRow(i)" style="display:none">Save</button>
+          <button class="btn btn-secondary btn-sm cancel-btn" (click)="cancelEdit(i)" style="display:none">Cancel</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

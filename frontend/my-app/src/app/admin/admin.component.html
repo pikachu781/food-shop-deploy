@@ -1,0 +1,135 @@
+<!-- ADMIN NAVBAR -->
+<nav class="navbar navbar-expand-lg admin-navbar">
+  <div class="container">
+
+    <!-- Logo -->
+    <a class="navbar-brand text-white fw-bold" routerLink="/admin">
+      🛠 Admin Panel
+    </a>
+
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#adminMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="adminMenu">
+
+      <ul class="navbar-nav">
+ 
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/orders">Orders</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin/user">Users</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link btn btn-danger text-white ms-2"
+             routerLink="/login">
+            Logout
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+
+  <h2>Admin - Manage Foods</h2>
+
+  <!-- ADD FOOD SECTION -->
+  <div class="card p-3 mb-4">
+
+    <input [(ngModel)]="name"
+           placeholder="Name"
+           class="form-control mb-2">
+
+    <input [(ngModel)]="description"
+           placeholder="Description"
+           class="form-control mb-2">
+
+    <input [(ngModel)]="price"
+           type="number"
+           placeholder="Price"
+           class="form-control mb-2">
+
+    <!-- ✅ IMAGE UPLOAD -->
+    <input type="file"
+           class="form-control mb-2"
+           (change)="onFileSelected($event)">
+
+    <button class="btn btn-primary"
+            (click)="addFood()">
+      Add Food
+    </button>
+  </div>
+
+
+  <!-- FOOD LIST TABLE -->
+  <table class="table table-bordered">
+
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let food of foods">
+
+        <!-- ✅ SHOW IMAGE -->
+        <td>
+          <img [src]="'http://localhost:8080/admin/image/' + food.image"
+               width="80"
+               height="80">
+        </td>
+
+        <!-- ✅ EDIT NAME -->
+        <td>
+          <input [(ngModel)]="food.name"
+                 class="form-control">
+        </td>
+
+        <!-- ✅ EDIT DESCRIPTION -->
+        <td>
+          <input [(ngModel)]="food.description"
+                 class="form-control">
+        </td>
+
+        <!-- ✅ EDIT PRICE -->
+        <td>
+          <input [(ngModel)]="food.price"
+                 type="number"
+                 class="form-control">
+        </td>
+
+        <td>
+          <button class="btn btn-warning"
+                  (click)="updateFood(food)">
+            Update
+          </button>
+        </td>
+
+        <td>
+          <button class="btn btn-danger"
+                  (click)="deleteFood(food.id)">
+            Delete
+          </button>
+        </td>
+
+      </tr>
+    </tbody>
+
+  </table>
+ 
+</div>
+ 

@@ -1,0 +1,80 @@
+<div class="container mt-4">
+
+  <h2 class="text-center mb-4">📦 Order Management</h2>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover text-center">
+
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>Items</th>
+          <th>Total Price</th>
+          <th>Status</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let order of orders; let i = index">
+          <td>{{ i + 1 }}</td>
+
+          <!-- ✅ FIXED USER -->
+          <td>User ID: {{ order.userId }}</td>
+
+          <!-- ✅ FIXED ITEMS -->
+          <td>
+            <span *ngIf="!order.items || order.items.length === 0">
+              No Items
+            </span>
+
+            <ul *ngIf="order.items && order.items.length > 0" class="list-unstyled mb-0">
+              <li *ngFor="let item of order.items">
+                {{ item.name }} (x{{ item.quantity }})
+              </li>
+            </ul>
+          </td>
+
+          <!-- ✅ FIXED PRICE -->
+          <td>₹ {{ order.totalAmount }}</td>
+
+          <!-- ✅ FIXED STATUS -->
+          <td>
+            <span *ngIf="!order.status" class="badge bg-secondary">
+              No Status
+            </span>
+
+            <span 
+              *ngIf="order.status"
+              class="badge"
+              [ngClass]="{
+                'bg-warning': order.status === 'Pending',
+                'bg-info': order.status === 'Preparing',
+                'bg-success': order.status === 'Delivered'
+              }">
+              {{ order.status }}
+            </span>
+          </td>
+
+          <!-- UPDATE -->
+          <td>
+            <select 
+              class="form-select"
+              [(ngModel)]="order.status"
+              (change)="updateStatus(order)">
+
+              <option>Pending</option>
+              <option>Preparing</option>
+              <option>Delivered</option>
+
+            </select>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>

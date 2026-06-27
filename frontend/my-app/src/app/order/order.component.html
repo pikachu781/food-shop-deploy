@@ -1,0 +1,41 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">📦 My Orders</h2>
+
+  <div *ngIf="orders.length === 0" class="alert alert-info text-center">
+    No orders placed yet 😔
+  </div>
+
+  <div *ngFor="let order of orders" class="card mb-3">
+    
+    <div class="card-header bg-dark text-white">
+      Order #{{ order.id }}
+    </div>
+
+    <div class="card-body">
+
+      <p><strong>Total:</strong> ₹{{ order.totalAmount }}</p>
+
+      <!-- ⭐ STATUS -->
+      <p>
+        <strong>Status:</strong>
+        <span 
+          [ngClass]="{
+            'badge bg-warning': order.status === 'Pending',
+            'badge bg-primary': order.status === 'Preparing',
+            'badge bg-info': order.status === 'Out for Delivery',
+            'badge bg-success': order.status === 'Delivered',
+            'badge bg-danger': order.status === 'Cancelled'
+          }">
+          {{ order.status }}
+        </span>
+      </p>
+
+      <ul>
+        <li *ngFor="let item of order.items">
+          {{ item }}
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>

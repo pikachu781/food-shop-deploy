@@ -1,0 +1,12 @@
+.card {
+  border-radius: 15px;
+}
+
+img {
+  border: 4px solid #007bff;
+}
+
+button {
+  font-size: 18px;
+  border-radius: 10px;
+}

@@ -1,0 +1,23 @@
+.custom-navbar{
+  background: linear-gradient(45deg,#ff4b2b,#ff416c);
+  padding:12px 0;
+}
+
+.navbar-nav .nav-link{
+  color:white;
+  font-weight:500;
+  margin-right:10px;
+  transition:0.3s;
+}
+
+.navbar-nav .nav-link:hover{
+  color:#ffd700;
+  transform:scale(1.05);
+}
+
+.food-img{
+  height:200px;
+  object-fit:cover;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+}
