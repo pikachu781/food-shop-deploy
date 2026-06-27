@@ -10,7 +10,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")   // ✅ change to plural
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://food-shop-deploy.vercel.app"
+})
 public class UserController {
 
     @Autowired
