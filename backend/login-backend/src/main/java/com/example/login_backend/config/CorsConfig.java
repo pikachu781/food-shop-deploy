@@ -18,7 +18,7 @@ public class CorsConfig {
 
         config.setAllowedOrigins(List.of(
             "http://localhost:4200",
-            "https://food-shop-deploy-og48qe9zl-pikachu78.vercel.app"
+            "https://food-shop-deploy.vercel.app"
         ));
 
         config.setAllowedMethods(List.of(
