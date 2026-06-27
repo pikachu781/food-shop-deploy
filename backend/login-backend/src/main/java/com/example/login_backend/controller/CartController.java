@@ -10,8 +10,10 @@ import java.util.List;
 import com.example.login_backend.entity.Cart;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200",
-             "https://food-shop-deploy.vercel.app")
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://food-shop-deploy.vercel.app"
+})
 @RequestMapping("/cart")
 public class CartController {
 
