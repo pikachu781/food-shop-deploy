@@ -9,7 +9,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/profile")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://food-shop-deploy.vercel.app"
+})
 public class ProfileController {
 
     @Autowired
