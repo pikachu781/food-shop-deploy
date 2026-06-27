@@ -17,7 +17,10 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {
+    "http://localhost:4200",
+    "https://food-shop-deploy.vercel.app"
+})
 @RequestMapping("/admin")
 public class FoodController {
 
