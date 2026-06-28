@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
- 
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-    
-  imports: [CommonModule, FormsModule, HttpClientModule,RouterModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
@@ -17,30 +16,32 @@ export class AdminComponent {
 
   foods: any[] = [];
 
-  name: string = '';
-  description: string = '';
-  price: number = 0;
+  name = '';
+  description = '';
+  price = 0;
 
   selectedFile!: File;
+
+  private apiUrl = `${environment.apiUrl}/admin`;
 
   constructor(private http: HttpClient) {
     this.loadFoods();
   }
 
-  // LOAD ALL FOODS
+  // Load all foods
   loadFoods() {
-    this.http.get<any[]>('http://localhost:8080/admin/foods')
+    this.http.get<any[]>(`${this.apiUrl}/foods`)
       .subscribe(data => {
         this.foods = data;
       });
   }
 
-  // SELECT IMAGE
+  // Select image
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
   }
 
-  // ADD FOOD WITH IMAGE
+  // Add food
   addFood() {
 
     const formData = new FormData();
@@ -50,26 +51,37 @@ export class AdminComponent {
     formData.append('price', this.price.toString());
     formData.append('image', this.selectedFile);
 
-    this.http.post('http://localhost:8080/admin/foods', formData)
-      .subscribe(() => {
-        this.loadFoods();
-        this.name = '';
-        this.description = '';
-        this.price = 0;
+    this.http.post(`${this.apiUrl}/foods`, formData)
+      .subscribe({
+        next: () => {
+
+          this.loadFoods();
+
+          this.name = '';
+          this.description = '';
+          this.price = 0;
+
+          alert('Food added successfully');
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Failed to upload food');
+        }
       });
+
   }
 
-  // DELETE FOOD
+  // Delete food
   deleteFood(id: number) {
-    this.http.delete(`http://localhost:8080/admin/foods/${id}`)
+    this.http.delete(`${this.apiUrl}/foods/${id}`)
       .subscribe(() => {
         this.loadFoods();
       });
   }
 
-  // UPDATE NAME + DESCRIPTION + PRICE
+  // Update food
   updateFood(food: any) {
-    this.http.put(`http://localhost:8080/admin/foods/${food.id}`, food)
+    this.http.put(`${this.apiUrl}/foods/${food.id}`, food)
       .subscribe(() => {
         this.loadFoods();
       });
