@@ -27,6 +27,9 @@ public class UserService {
         if(existingUser != null){
             return false;   // user already exists
         }
+          // Every new user is a normal user
+        user.setRole("USER");
+
 
         repo.save(user);
         return true;   // registration successful
