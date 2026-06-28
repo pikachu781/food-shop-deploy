@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  imageBaseUrl = environment.apiUrl + '/uploads/';
+  
 
   cartItems: any[] = [];
   totalAmount: number = 0;
