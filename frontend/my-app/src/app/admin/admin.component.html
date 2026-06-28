@@ -88,7 +88,12 @@
 
         <!-- ✅ SHOW IMAGE -->
         <td>
-         <img [src]="food.image">
+        <img
+            [src]="food.image"
+            alt="{{ food.name }}"
+            width="80"
+            height="80"
+            style="object-fit:cover;border-radius:8px;">
         </td>
 
         <!-- ✅ EDIT NAME -->
