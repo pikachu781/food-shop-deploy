@@ -1,25 +1,22 @@
 package com.example.login_backend.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.example.login_backend.entity.Food;
 import com.example.login_backend.repository.FoodRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = {
-    "http://localhost:4200",
-    "https://food-shop-deploy.vercel.app"
+        "http://localhost:4200",
+        "https://food-shop-deploy.vercel.app"
 })
 @RequestMapping("/admin")
 public class FoodController {
@@ -27,7 +24,8 @@ public class FoodController {
     @Autowired
     private FoodRepository repo;
 
-    private final String uploadDir = "uploads/";
+    @Autowired
+    private Cloudinary cloudinary;
 
     // GET ALL FOODS
     @GetMapping("/foods")
@@ -35,6 +33,7 @@ public class FoodController {
         return repo.findAll();
     }
 
+    // ADD FOOD
     @PostMapping("/foods")
     public Food addFood(
             @RequestParam("name") String name,
@@ -43,30 +42,27 @@ public class FoodController {
             @RequestParam("image") MultipartFile file
     ) throws IOException {
 
-        // ✅ Create uploads folder if not exists
-        Path uploadPath = Paths.get(uploadDir);
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
+        // Upload image to Cloudinary
+        Map uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
+                ObjectUtils.emptyMap()
+        );
 
-        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        Path path = uploadPath.resolve(fileName);
-
-        Files.write(path, file.getBytes());
+        String imageUrl = uploadResult.get("secure_url").toString();
 
         Food food = new Food();
         food.setName(name);
         food.setDescription(description);
         food.setPrice(price);
-        food.setImage(fileName);
+        food.setImage(imageUrl);
 
         return repo.save(food);
     }
 
-
-    // UPDATE NAME, DESCRIPTION, PRICE
+    // UPDATE FOOD
     @PutMapping("/foods/{id}")
-    public Food updateFood(@PathVariable Long id, @RequestBody Food updatedFood) {
+    public Food updateFood(@PathVariable Long id,
+                           @RequestBody Food updatedFood) {
 
         Food food = repo.findById(id).orElseThrow();
 
@@ -77,21 +73,9 @@ public class FoodController {
         return repo.save(food);
     }
 
-    // DELETE
+    // DELETE FOOD
     @DeleteMapping("/foods/{id}")
     public void deleteFood(@PathVariable Long id) {
         repo.deleteById(id);
-    }
-
-    // SERVE IMAGE
-    @GetMapping("/image/{fileName}")
-    public ResponseEntity<Resource> getImage(@PathVariable String fileName) throws IOException {
-
-        Path path = Paths.get(uploadDir + fileName);
-        Resource resource = new UrlResource(path.toUri());
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.IMAGE_JPEG)
-                .body(resource);
     }
 }
