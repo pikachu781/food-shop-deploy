@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auth.guard';
+import { adminGuard } from './guards/admin.guard';
 
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
@@ -11,7 +12,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { OrderManagementComponent } from './admin/order-management/order-management.component';
 import { UserComponent } from './admin/user/user.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { adminGuard } from './guards/admin.guard';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 export const routes: Routes = [
@@ -21,20 +21,28 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'admin-login', component: AdminLoginComponent },
 
-  // Protected Pages
-   
+  // User Protected Pages
   { path: 'cart', component: CartComponent, canActivate: [authGuard] },
   { path: 'orders', component: OrderComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
-  { path: 'admin/orders', component: OrderManagementComponent, canActivate: [authGuard] },
-  { path: 'admin/user', component: UserComponent, canActivate: [authGuard] },
   { path: 'checkout', component: CheckoutComponent, canActivate: [authGuard] },
-   { path: 'admin-login', component: AdminLoginComponent },
 
+  // Admin Protected Pages
   {
     path: 'admin-dashboard',
     component: AdminComponent,
+    canActivate: [adminGuard]
+  },
+  {
+    path: 'admin/orders',
+    component: OrderManagementComponent,
+    canActivate: [adminGuard]
+  },
+  {
+    path: 'admin/user',
+    component: UserComponent,
     canActivate: [adminGuard]
   },
 
